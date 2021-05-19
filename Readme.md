@@ -32,17 +32,6 @@ To-do list:
 * Evaluate and update low thresholds, high thresholds, and popularity based on recent sales
 * Create front-end client for application
 
-## Getting Started
-   
-(include git clone command)
-(include all environment setup steps)
-
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
-
-- All the `code` required to get started
-- Images of what it should look like
-
 ## Usage
 
 > Clone Repository, setup Amazon Keyspaces, setup Amazon truststore, setup enviornment vairables in run configurations, use postman for api requests
