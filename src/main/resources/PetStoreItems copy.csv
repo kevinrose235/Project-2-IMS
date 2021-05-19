@@ -1,0 +1,100 @@
+﻿Dog Dry foods,PuppyKibble50,50,45.99,,,1
+,PuppyKibble20,20,25.99,,,2
+,AdultDogKibble50,50,49.99,,,3
+,AdultDogKibble20,20,28.99,,,4
+,SeniorDogKibble50,50,45.99,,,5
+,SeniorDogKibble20,20,25.99,,,6
+,WeightControlDogKibble50,50,49.99,,,7
+,WeightControlDogKibble20,20,28.99,,,8
+Dog Wet foods,PuppyCanFood,1,2.99,,,9
+,AdultDogCanFood,1,2.49,,,10
+,SeniorDogCanFood,1,2.99,,,11
+,WeightControlDogCanFood,1,2.49,,,12
+Cat Dry Food,KittenKibble,15,20.99,,,13
+,AdultCatKibble,15,20.99,,,14
+,SeniorCatKibble,15,20.99,,,15
+,WeightControlCatKibble,15,20.99,,,16
+Cat Wet Food,KittenCanFood,0.25,1.25,,,17
+,AdultCatCanFood,0.25,1.25,,,18
+,SeniorCatCanFood,0.25,1.25,,,19
+,WeightControlCanFood,0.25,1.25,,,20
+Bird Seed,WildBirdSeed,20,16.99,,,21
+,ParrotFood,8,14.59,,,22
+,ParakeetFood,4.5,12.49,,,23
+Rabbit Food,RabbitPellets,10,6.49,,,24
+,AlfalfaHay,6,15.99,,,25
+Hamster Food,HamsterPellets,3,4.99,,,26
+DogTreats,DogBiscuits,7,11.49,,,27
+,DogJerky,1.5,11.99,,,28
+,DogSoftTreats,1.5,17.99,,,29
+,FreezeDriedChicken,0.75,24.99,,,30
+,DogDentalTreats,2.5,33.99,,,31
+Cat Treats,CatTreats,0.125,1.85,,,32
+,CatDentalTreats,0.3,4.49,,,33
+Dog Toys,TennisBalls3,0.5,4.49,,,34
+,RubberBalls2,0.5,10.99,,,35
+,KongLg,0.4,12.99,,,36
+,KongMed,0.25,10.99,,,37
+,KongSm,0.15,7.99,,,38
+,SqueakyDuck,0.5,6.99,,,39
+,TugRope,0.5,4.99,,,40
+,ChuckIt,0.75,12.99,,,41
+,StuffedPig,0.25,8.99,,,42
+,ChewBoneLg,1.25,6.29,,,43
+,ChewBoneSm,0.75,3.49,,,44
+,DogBedLg,7.8,49.99,,,45
+,DogBedMed,5.3,35.99,,,46
+,DogBedSm,2.2,22.99,,,47
+,DogCollarLg,0.35,7.99,,,48
+,DogCollarMed,0.3,7.49,,,49
+,DogCollarSm,0.25,6.49,,,50
+,Leash6ft,0.5,8.79,,,51
+,Leash4ft,0.4,7.99,,,52
+,DogCrateLg,33.5,63.99,,,53
+,DogCrateMed,16.5,33.99,,,54
+,DogCrateSm,9,24.99,,,55
+,FoodBowlLg,0.35,5.49,,,56
+,FoodBowlMd,0.25,4.99,,,57
+,FoodBowlSm,0.175,3.29,,,58
+,WaterResevoirLg,1.5,42.99,,,59
+,WaterReseviorSm,0.5,10.99,,,60
+,DogBrush,0.5,12.99,,,61
+,DogShampoo,1,8.49,,,62
+Cat Toys,FeatherToy,0.3,9.95,,,63
+,CatNipMouse3,0.25,2.99,,,64
+,RibbonToy,0.3,3.99,,,65
+,ScratchingPost,4,25.49,,,66
+,SpringToy10,0.2,3.49,,,67
+,LaserPointer,0.1,3.99,,,68
+,CatBed,2.4,19.99,,,69
+,CatCarrier,4.1,34.99,,,70
+,CatCollar,0.2,6.99,,,71
+,LitterBox,3.9,29.99,,,72
+,Litter25,25,9.99,,,73
+,Litter40,40,13.99,,,74
+,CatTree,35,75,,,75
+,CatBrush,0.3,9.99,,,76
+Bird,BirdHouse,1,14.99,,,77
+,BirdFeeder,2,22.99,,,78
+,BirdCageLg,13.6,65.99,,,79
+,BirdCageSm,6,49.99,,,80
+,CageCoverLg,1.5,23.49,,,81
+,CageCoverSm,1,19.99,,,82
+,BirdPerch,0.3,10.99,,,83
+,BirdSwing,0.3,18.99,,,84
+,BirdChewToy,0.9,13.24,,,85
+,BirdLadder,0.4,6.86,,,86
+Rabbit,RabbitHutch,51,199.99,,,87
+,RabbitCage,2,31.99,,,88
+,IglooHideout,0.1,8.85,,,89
+,Bedding,2.5,16.99,,,90
+,AlfalfaTreats,0.9,4.49,,,91
+,WaterBottleLg,0.4,13.99,,,92
+Hamster,WaterBottleSm,0.2,11.99,,,93
+,HamsterCage,1.5,24.99,,,94
+,HamsterWheel,0.2,10.99,,,95
+,HamsterBall,0.25,5.99,,,96
+,SaltLick,0.175,4.49,,,97
+,HamsterTubingStraight,0.5,18.99,,,98
+,HamsterTubingCurvesAndJoins,0.5,16.59,,,99
+,HamsterObservatory,0.2,9.99,,,100

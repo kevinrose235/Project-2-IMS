@@ -1,0 +1,712 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Mine916/IMS/1.0.0
+  - description: Production
+    url: http://13.58.234.227:8080/
+  - description: localhost
+    url: http://localhost:8080/
+    
+info:
+  description: Inventory Management System REST API
+  version: "1.0.0"
+  title: Inventory Management System
+  contact:
+    email: dakota.clark@revature.net
+    
+tags:
+  - name: Users
+    description: Users routes
+  - name: Stores
+    description: Store routes
+  - name: Contracts
+    description: Contract routes
+  - name: Inventory
+    description: Inventory routes
+    
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Create a user
+      operationId: createuser
+      description: |
+        Create a user.
+        Must be logged in as a corporate user
+      parameters:
+        - in: query
+          name: name
+          description: User name
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: password
+          description: Password for user
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: storeid
+          required: true
+          description: Store user is based in
+          schema:
+            type: integer
+        - in: query
+          name: role
+          required: true
+          description: Users role.
+          schema:
+            type: string
+            enum: ["STORE", "CORPORATE"]
+      responses:
+        '201':
+          description: User was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad input parameter
+        '401':
+          description: "Unauthorized: User not logged in"
+        '403':
+          description: "Forbidden: User is not Corporate"
+          
+  /login:
+    post:
+      tags:
+        - Users
+      summary: Login a user
+      operationId: login
+      description: |
+        Login a user
+      parameters:
+        - in: query
+          name: id
+          description: User's ID
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: password
+          description: User's password
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad input parameter
+        '406':
+          description:  'Unacceptable: Already logged in'
+          
+    delete:
+      tags:
+        - Users
+      summary: Logout a user
+      operationId: logout
+      description: |
+        Logout a user
+      responses:
+        '200':
+          description: User logged out successfully
+    
+    put:
+      tags:
+        - Users
+      summary: Change password
+      operationId: changePassword
+      description: |
+        Change the password of the currently logged in user
+      parameters: 
+        - in: query
+          name: oldPass
+          required: true
+          description: Old/current password
+          schema:
+            type: string
+        - in: query
+          name: newPass
+          required: true
+          description: New password
+          schema:
+            type: string
+        - in: query
+          name: confirm
+          required: true
+          description: Confirm new password
+          schema:
+            type: string
+        
+      responses:
+        '200':
+          description: Changed password successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad input parameter
+        '401': 
+          description: Unauthorized
+  
+  /stores:
+    get:
+      tags:
+        - Stores
+      summary: Get all stores
+      operationId: getAllStores
+      description: |
+        A logged in user can view all stores
+      responses:
+        '200': 
+          description: List of stores
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/Store"
+        '401':
+          description: "Unauthorized: Not logged in"
+
+    post:
+      tags:
+        - Stores
+      summary: Create new store
+      operationId: createStore
+      description: |
+        A corporate user can create a store
+      parameters: 
+        - in: query
+          name: name
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: location
+          required: true
+          schema:
+            type: object
+            properties:
+              longitude: 
+                type: number
+              latitude:
+                type: number
+      responses:
+        '201':
+          description: Created store successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Store"
+        '400':
+          description: Bad input parameter
+        '401':
+          description: "Unauthorized: User not logged in"
+        '403':
+          description: "Forbidden: User is not Corporate"
+          
+  /stores/existingStores:
+    post:
+      tags:
+        - Stores
+      summary: Create stores from CSV
+      operationId: createStoreFromCSV
+      description: |
+        A corporate user can upload a csv of stores to be created
+      parameters: 
+        - in: query
+          name: file
+          required: true
+          schema:
+            type: string
+            format: csv
+      responses:
+        '201':
+          description: Created store(s) successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Store"
+        '400':
+          description: Bad input parameter
+        '401':
+          description: "Unauthorized: User not logged in"
+        '403':
+          description: "Forbidden: User is not Corporate"
+          
+  /stores/{storeid}:
+    get:
+      tags:
+        - Stores
+      summary: Get store by id
+      operationId: getStoreById
+      parameters: 
+        - in: path
+          required: true
+          name: storeid
+          schema:
+            type: integer
+      description: |
+        A logged in user can view a store
+      responses:
+        '200': 
+          description: Store
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/Store"
+        '401':
+          description: "Unauthorized: Not logged in"
+        '404':
+          description: Not found
+    
+    delete:
+      tags:
+        - Stores
+      summary: Delete Store
+      operationId: deleteStore
+      parameters: 
+        - in: path
+          name: storeid
+          required: true
+          schema:
+            type: integer
+      description: |
+        A logged in corporate user can delete a store
+      responses:
+        '200':
+          description: store was deleted
+        '401':
+          description: "Unauthorized"
+        '403':
+          description: "Forbidden"
+        '404':
+          description: "Store not found"
+
+  /stores/{storeid}/inventory:
+    get:
+      tags:
+        - Inventory
+      parameters: 
+        - in: path
+          required: true
+          name: storeid
+          schema:
+            type: integer
+      summary: Get store inventory
+      operationId: getInventory
+      description: |
+        A logged in user can get the list of inventory from a store
+      responses:
+        '200':
+          description: "Returned stores inventory"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        '401':
+          description: "Unauthorized"
+          
+    post:
+      tags:
+        - Inventory
+      parameters: 
+        - in: path
+          required: true
+          name: storeid
+          schema:
+            type: integer
+        - in: query
+          required: true
+          name: file
+          schema:
+            type: string
+            format: csv
+      summary: Add inventory from CSV
+      operationId: createInventoryFromCSV
+      description: |
+        A logged in user can upload a csv of items to add to the store's inventory
+      responses:
+        '201':
+          description: "Items were created"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        '401':
+          description: "Unauthorized"
+          
+    put:
+      tags:
+        - Inventory
+      parameters: 
+        - in: path
+          required: true
+          name: storeid
+          schema:
+            type: integer
+        - in: query
+          required: true
+          name: updatedInventory
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Item"
+      summary: Update items in inventory
+      operationId: updateInventory
+      description: |
+        A logged in user can update a store's inventory with a list of items
+      responses:
+        '200':
+          description: "Items were updated"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        '401':
+          description: "Unauthorized"
+          
+    delete:
+      tags:
+        - Inventory
+      parameters: 
+        - in: path
+          required: true
+          name: storeid
+          schema:
+            type: integer
+        - in: query
+          required: true
+          name: itemIds
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/ItemIds"
+      summary: Delete items in inventory
+      operationId: deleteInventory
+      description: |
+        A logged in user can delete items from a store's inventory
+      responses:
+        '200':
+          description: "Items were deleted"
+        '401':
+          description: "Unauthorized"
+      
+  /stores/{storeid}/inventory/sales:
+    post:
+      tags:
+        - Inventory
+      parameters: 
+        - in: path
+          required: true
+          name: storeid
+          schema:
+            type: integer
+        - in: query
+          required: true
+          name: itemsSold
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/SoldItem"
+      summary: Post sales of items
+      operationId: postSales
+      description: |
+        A logged in user can send in items that have been sold and how many
+      responses:
+        '200':
+          description: "Items quantities were updated"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        '401':
+          description: "Unauthorized"
+          
+  /stores/{storeid}/order:
+    post:
+      tags:
+        - Inventory
+      parameters: 
+        - in: path
+          required: true
+          name: storeid
+          schema:
+            type: integer
+        - in: query
+          required: true
+          name: items
+          schema:
+            type: array
+            items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Item Ids
+      summary: Create manual order
+      operationId: createManualOrder
+      description: |
+        A logged in user can submit a manual orders for items
+      responses:
+        '200':
+          description: "Orders were placed"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        '401':
+          description: "Unauthorized"
+          
+  /contracts:
+    post:
+      tags:
+        - Contracts
+      parameters: 
+        - in: query
+          required: true
+          name: contract
+          schema:
+            $ref: "#/components/schemas/Contract"
+      summary: Create a contract
+      operationId: createContract
+      description: |
+        A logged in corporate user can add a contract
+      responses:
+        '201':
+          description: "Contract was created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contract"
+        '401':
+          description: "Unauthorized"
+        '403':
+          description: "Forbidden"
+        '409':
+          description: "Conflict: Contract already exists"
+    
+  /contracts/{contractId}:
+    get:
+      tags:
+        - Contracts
+      parameters:
+        - in: path
+          required: true
+          name: contractId
+          schema:
+            type: integer
+      summary: Get a contract
+      operationId: getContract
+      description: | 
+        A logged in corporate use can view a contract
+      responses:
+        '200':
+          description: "Fetched contract successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contract"
+        '401':
+          description: "Unauthorized"
+        '403':
+          description: "Forbidden"
+        '404':
+          description: "Contract not found"
+    
+    put:
+      tags:
+        - Contracts
+      parameters:
+        - in: path
+          required: true
+          name: contractId
+          schema:
+            type: integer
+        - in: query
+          required: true
+          name: updatedContract
+          schema:
+            $ref: "#/components/schemas/Contract"
+      summary: Update a contract
+      operationId: updateContract
+      description: | 
+        A logged in corporate use can update a contract
+      responses:
+        '200':
+          description: "updated contract successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contract"
+        '401':
+          description: "Unauthorized"
+        '403':
+          description: "Forbidden"
+        '404':
+          description: "Contract not found"
+
+  /contracts/{supplier}:
+    post:
+      tags:
+        - Contracts
+      parameters: 
+        - in: path
+          required: true
+          name: supplier
+          schema:
+            type: string
+        - in: query
+          required: true
+          name: file
+          schema:
+            type: string
+            format: csv
+      summary: Add inventory from CSV
+      operationId: createContractsFromCSV
+      description: |
+        A logged in corporate user can upload a csv of contracts
+      responses:
+        '201':
+          description: "contracts were created"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contract"
+        '401':
+          description: "Unauthorized"
+        '403':
+          description: "Forbidden"
+
+components:
+  schemas:
+    Contract:
+      type: object
+      properties:
+        itemId: 
+          type: integer
+          description: Item ID 
+        supplier:
+          type: string
+        itemCost:
+          type: number
+          description: Cost per item
+        itemMSRP:
+          type: number
+          description: Manufaturer suggessted retail price
+        minOrderCost:
+          type: number
+          description: Lowest price to pay when ordering from distributor
+        quantity:
+          type: integer
+          description: Number of items received per order from supplier
+        shippingCost:
+          type: number
+  
+    SoldItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Item's Id
+        quantity:
+          type: integer
+          description: Number of items sold
+  
+    ItemIds:
+      type: object
+      properties:
+        id: 
+          type: integer
+    
+    Item:
+      type: object
+      properties:
+        primaryKey:
+          type: object
+          properties:
+            id: 
+              type: integer
+            storeId:
+              type: integer
+        name:
+          type: string
+        weight:
+          type: number
+        cost:
+          type: number
+        popularity:
+          type: integer
+        overstockThreshold:
+          type: integer
+        lowThreshold:
+          type: integer
+        quantity:
+          type: integer
+  
+    Store:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: petco 1
+        location:
+          type: object
+          properties:
+            longitude:
+              type: number
+            latitude:
+              type: number
+          example: 
+            longitude: 23.1234
+            latitude: 10.1235
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - storeid
+        - role
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Dakota
+        storeid:
+          type: integer
+          example: 1
+        role:
+          type: string
+          enum: ["STORE", "CORPORATE"]
+          example: STORE
